@@ -6,6 +6,16 @@ const UNITS = [
   { name: 'Optimización y cierre',    weeks: [13, 14, 15, 16] }
 ];
 const ACTIVITIES = ['Actividad 1', 'Actividad 2'];
+const ACTIVITY_TITLES = {
+  1: ['Formulación del Proyecto y Selección de la Arquitectura', 'Mapa conceptual de conceptos'],
+  2: ['Despliegue y Configuración de Motores de Datos (DBMS)', 'Actividad práctica'],
+  3: ['Modelamiento Físico y Mecanismos de Integración', 'Primera práctica'],
+  4: ['Sustentación y Validación de la Infraestructura de Datos', 'Evidencia de aprendizaje'],
+  5: ['Manual Azure SQL · Grados y Títulos', 'Infografía Azure SQL · Grados y Títulos'],
+  6: ['Arquitectura Física de Almacenamiento y Distribución de Archivos', 'Configuración de la instancia y gestión de memoria'],
+  7: ['Organización de Esquemas Lógicos y Estrategias de Indexación', 'Configuración física y distribución de archivos'],
+  8: ['Organización de Esquemas Lógicos e Indexación', 'SQL QUEST · Esquemas lógicos e indexación']
+};
 const TOTAL = UNITS.length * 4 * ACTIVITIES.length;
 
 let editor = false; try { editor = localStorage.getItem('editor') === '1'; } catch (e) {}
@@ -105,12 +115,42 @@ function render() {
   });
 }
 
+function showWeekDialog(w) {
+  let dlg = $('#weekDialog');
+  if (!dlg) {
+    dlg = document.createElement('dialog');
+    dlg.id = 'weekDialog';
+    dlg.className = 'dlg week-dialog';
+    dlg.setAttribute('aria-label', 'Actividades de la semana');
+    document.body.appendChild(dlg);
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  }
+  const cards = ACTIVITIES.map((name, a) => {
+    const available = slotFiles(w, a);
+    const primary = available.find(f => isHtml(f.name)) || available.find(f => isPdf(f.name)) || available[0];
+    const description = (ACTIVITY_TITLES[w] || [])[a] || 'Evidencia de aprendizaje';
+    const count = available.length ? available.length + (available.length === 1 ? ' evidencia disponible' : ' evidencias disponibles') : 'Sin evidencia publicada todavía';
+    const action = primary
+      ? '<button type="button" class="btn primary week-open" data-week-open="' + esc(String(primary.id)) + '">Ver actividad <span aria-hidden="true">→</span></button>'
+      : '<button type="button" class="btn primary week-open" disabled>Sin evidencia</button>';
+    return '<article class="week-activity-card">' +
+      '<p class="mono week-activity-label">' + esc(name) + '</p>' +
+      '<p class="week-activity-description">' + esc(description) + '</p>' +
+      '<p class="mono week-activity-count">' + esc(count) + '</p>' + action +
+      '</article>';
+  }).join('');
+  dlg.innerHTML = '<form method="dialog" class="dlg-x"><button type="submit" aria-label="Cerrar">×</button></form>' +
+    '<div class="week-dialog-head"><p class="eyebrow mono">ACTIVIDADES</p><h2 id="weekDialogTitle">Semana ' + pad(w) + '</h2></div>' +
+    '<div class="week-dialog-grid">' + cards + '</div>';
+  dlg.setAttribute('aria-labelledby', 'weekDialogTitle');
+  if (typeof dlg.showModal === 'function') dlg.showModal();
+}
+
 function goWeek(w) {
   unit = UNITS.findIndex(u => u.weeks.includes(w));
   if (unit < 0) unit = 0;
   render();
-  const el = $('#wk-' + w);
-  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1800); }
+  showWeekDialog(w);
 }
 
 document.addEventListener('click', e => {
@@ -122,6 +162,7 @@ document.addEventListener('click', e => {
     const w = +actEl.dataset.w, a = +actEl.dataset.a;
     openBasket(`Semana ${pad(w)} · ${ACTIVITIES[a]}`, f => addFiles(w, a, Array.isArray(f) ? f : [f]));
   }
+  else if (t.dataset.weekOpen) { const f = allFiles().find(x => x.id == t.dataset.weekOpen); if (f) openFile(f); }
   else if (t.dataset.open) { const f = allFiles().find(x => x.id == t.dataset.open); if (f) openFile(f); }
   else if (t.dataset.dl) { const f = allFiles().find(x => x.id == t.dataset.dl); if (f) openFile(f, true); }
   else if (t.dataset.rm) { if (confirm('¿Eliminar este archivo?')) removeFile(+t.dataset.rm); }

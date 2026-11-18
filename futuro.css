@@ -54,3 +54,17 @@ body:before{content:"";position:fixed;inset:0 0 auto;height:75vh;z-index:-1;poin
 .retos{display:grid;gap:.4rem;margin-bottom:.8rem}.retos select{padding:.5rem;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:.78rem}.retotxt,.retomsg{font-size:.74rem;color:var(--mu);min-height:1em}.retomsg{margin-top:.6rem;color:var(--tx)}
 .hist{margin-top:.8rem;font-size:.7rem}.hist summary{cursor:pointer;color:var(--cy)}#hist{list-style:none;padding:0;margin:.5rem 0 0;display:grid;gap:.3rem}#hist li{padding:.35rem .6rem;border:1px solid var(--line);border-radius:8px;font:.62rem 'JetBrains Mono',monospace;color:var(--mu);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#hist li:hover{border-color:var(--cy);color:var(--tx)}
 @media(max-width:900px){.ach{grid-template-columns:1fr}.xpchip{display:none}}
+
+/* Tarjetas de actividades por semana, inspiradas en la vista de referencia */
+.week-dialog{width:min(94vw,760px);padding:0;overflow:auto}
+.week-dialog-head{padding:1.15rem 3.8rem 1rem 1.2rem;border-bottom:1px solid var(--line)}
+.week-dialog-head .eyebrow{margin:0 0 .2rem}
+.week-dialog-head h2{font-size:1.25rem;margin:0}
+.week-dialog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;padding:1rem 1.2rem 1.2rem}
+.week-activity-card{min-width:0;padding:1rem;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.week-activity-label{margin:0;color:var(--tx);font-size:.75rem;font-weight:700}
+.week-activity-description{min-height:2.6em;margin:.35rem 0 .4rem!important;color:var(--mu);font-size:.76rem!important}
+.week-activity-count{margin:0;color:var(--cy);font-size:.58rem}
+.week-open{margin-top:.8rem}
+.week-open[disabled]{opacity:.6;cursor:not-allowed}
+@media(max-width:560px){.week-dialog-grid{grid-template-columns:1fr;padding:.8rem}.week-dialog-head{padding-left:.9rem}}
