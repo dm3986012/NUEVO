@@ -140,3 +140,12 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 .viewer-image{display:block;max-width:100%;max-height:72vh;width:auto;height:auto;object-fit:contain;margin:1rem auto}
 .viewer-code{margin:0;padding:1.2rem;min-height:100%;overflow:auto;color:#dbeafe;background:#080e20;font:.78rem/1.65 'JetBrains Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:600px){.viewer{width:100vw;height:94vh;max-width:none;max-height:94vh;border-radius:14px}.viewer-frame{min-height:70vh}.viewer-head{padding:.8rem}.viewer-image{max-height:68vh}}
+
+
+/* Corrección definitiva de la tarjeta de fotografía */
+.photo{width:auto!important;max-width:100%;justify-self:center}
+.frame{display:inline-block!important;width:max-content!important;max-width:100%;padding:8px!important}
+#fotoImg{display:block!important;width:auto!important;height:auto!important;max-width:min(100%,360px)!important;max-height:520px!important;aspect-ratio:auto!important;object-fit:contain!important}
+#fotoPh[hidden]{display:none!important}
+#fotoPh:not([hidden]){display:grid;width:min(360px,100%);aspect-ratio:1/1;box-sizing:border-box}
+.frame figcaption{left:16px;right:16px;bottom:16px}
