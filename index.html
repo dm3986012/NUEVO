@@ -204,6 +204,10 @@
 
 <input type="file" id="cvIn" accept=".pdf,application/pdf" hidden>
 <input type="file" id="fotoIn" accept="image/*" hidden>
+<dialog class="viewer" id="fileViewer" aria-label="Vista previa del trabajo">
+  <div class="viewer-head"><div><span class="eyebrow mono">VISTA PREVIA</span><h3 id="viewerTitle">Trabajo</h3></div><button type="button" class="viewer-close" id="viewerClose" aria-label="Cerrar">✕</button></div>
+  <div class="viewer-body" id="viewerBody"><p class="mono">Cargando archivo…</p></div>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="config.js"></script>
 <script src="script.js"></script>
