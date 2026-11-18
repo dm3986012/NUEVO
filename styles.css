@@ -120,3 +120,23 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 .files .badge-file{background:#8793b422;color:var(--mu);border:1px solid var(--line)}
 .files .file-item.is-img .nm,.files .file-item.is-pdf .nm{font-weight:500}
 .files .file-item:hover .thumb{border-color:var(--cy)}
+
+
+/* ===== Ajuste de retrato: conservar proporciones originales ===== */
+.photo{width:min(100%,340px)}
+.frame{width:fit-content;max-width:100%;margin-inline:auto}
+.frame img{display:block;width:auto;height:auto;max-width:100%;max-height:480px;aspect-ratio:auto;object-fit:contain;margin-inline:auto}
+.ph{width:300px;max-width:100%;aspect-ratio:1/1}
+
+/* ===== Visor integrado: trabajos dentro del portafolio ===== */
+.viewer{width:min(94vw,1100px);height:min(90vh,820px);max-width:1100px;max-height:90vh;padding:0;border:1px solid var(--cy);border-radius:18px;background:var(--panel);color:var(--tx);box-shadow:0 0 60px #22d3ee33;overflow:hidden}
+.viewer::backdrop{background:rgba(2,6,23,.82);backdrop-filter:blur(7px)}
+.viewer[open]{display:flex;flex-direction:column}
+.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border-bottom:1px solid var(--line);background:linear-gradient(90deg,#22d3ee12,#a855f712)}
+.viewer-head h3{margin:.2rem 0 0;font-size:1rem;overflow-wrap:anywhere}
+.viewer-close{flex:0 0 auto;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--cy);font-size:1rem;cursor:pointer}
+.viewer-body{flex:1;min-height:0;overflow:auto;background:#080e20}
+.viewer-frame{display:block;width:100%;height:100%;min-height:65vh;border:0;background:#fff}
+.viewer-image{display:block;max-width:100%;max-height:72vh;width:auto;height:auto;object-fit:contain;margin:1rem auto}
+.viewer-code{margin:0;padding:1.2rem;min-height:100%;overflow:auto;color:#dbeafe;background:#080e20;font:.78rem/1.65 'JetBrains Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:600px){.viewer{width:100vw;height:94vh;max-width:none;max-height:94vh;border-radius:14px}.viewer-frame{min-height:70vh}.viewer-head{padding:.8rem}.viewer-image{max-height:68vh}}
