@@ -128,14 +128,36 @@
 <section class="sec" id="juego">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow mono">JUEGO</p><h2>Encesta antes de que acabe el tiempo.</h2></div>
-      <p class="note">Tres dificultades y 8 niveles: aros que se mueven, viento y muros. Supera el objetivo antes de que se acabe el tiempo y gana hasta 3 estrellas.</p>
+      <div><p class="eyebrow mono">MINI-JUEGOS</p><h2>Aprende jugando.</h2></div>
+      <p class="note">Elige un reto para practicar bases de datos, SQL y conceptos de Azure. Gana puntos de experiencia mientras avanzas.</p>
     </div>
-    <div class="hud mono"><span>NIVEL <b id="gLvl">—</b></span><span>CANASTAS <b id="gGoal">0/0</b></span><span>TIEMPO <b id="gTime">0</b>s</span><span>PUNTOS <b id="gScore">0</b></span><span>RÉCORD <b id="gBest">0</b></span><button class="mini mono" id="gMenu" type="button">☰ Niveles</button></div>
-    <div class="gwrap"><canvas id="gm" width="640" height="400" aria-label="Juego de baloncesto: arrastra la pelota y suéltala"></canvas>
-      <div class="gover" id="gOver"></div></div>
+    <div class="mini-games">
+      <article class="mini-game-card" data-mode="sql" tabindex="0" role="button" aria-label="Jugar Quiz SQL">
+        <div class="mini-game-icon">🧠</div><h3>Quiz SQL</h3>
+        <p>Pon a prueba tus conocimientos de consultas, esquemas e indexación.</p>
+        <span class="mini-game-action">JUGAR QUIZ <span>→</span></span>
+      </article>
+      <article class="mini-game-card" data-mode="code" tabindex="0" role="button" aria-label="Jugar Reto de Código">
+        <div class="mini-game-icon">💻</div><h3>Reto de Código</h3>
+        <p>Elige la consulta correcta y demuestra tu lógica para ganar XP.</p>
+        <span class="mini-game-action">RETO DE CÓDIGO <span>→</span></span>
+      </article>
+      <article class="mini-game-card" data-mode="memory" tabindex="0" role="button" aria-label="Jugar Memoria de Conceptos">
+        <div class="mini-game-icon">🃏</div><h3>Memoria de Conceptos</h3>
+        <p>Refuerza conceptos de bases de datos y Azure SQL con preguntas.</p>
+        <span class="mini-game-action">JUGAR MEMORIA <span>→</span></span>
+      </article>
+    </div>
+    <div class="mini-game-score"><span>🏆 Puntuación total</span><strong id="totalXP">0 XP</strong><span id="gameHearts" aria-label="Vidas">❤️❤️❤️</span></div>
   </div>
 </section>
+
+<div class="mini-game-modal" id="gameModal" aria-hidden="true">
+  <div class="mini-game-dialog" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+    <div class="mini-game-modal-head"><h2 id="gameTitle">🎮 Mini-juego</h2><button type="button" id="closeGame" aria-label="Cerrar">×</button></div>
+    <div class="mini-game-modal-body" id="gameBody"></div>
+  </div>
+</div>
 
 <section class="band" id="actividades">
   <div class="wrap">
@@ -214,6 +236,6 @@
 <script src="futuro.js"></script>
 <script src="logros.js"></script>
 <script src="retos.js"></script>
-<script src="game.js?v=20261118-1"></script>
+<script src="minijuegos.js?v=20261118-original"></script>
 </body>
 </html>
