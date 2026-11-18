@@ -149,3 +149,68 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 #fotoPh[hidden]{display:none!important}
 #fotoPh:not([hidden]){display:grid;width:min(360px,100%);aspect-ratio:1/1;box-sizing:border-box}
 .frame figcaption{left:16px;right:16px;bottom:16px}
+
+
+/* FOTO LIMPIA: sin marco ni fondo morado; texto completamente dentro */
+.photo{
+  width:min(100%,340px)!important;
+  max-width:340px!important;
+  justify-self:center!important;
+  margin:0!important;
+  padding:0!important;
+}
+.frame{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+#fotoImg{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  margin:0!important;
+}
+.frame figcaption{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  gap:3px!important;
+  padding:10px 12px!important;
+  margin:0!important;
+  border:0!important;
+  background:rgba(4,10,28,.88)!important;
+  color:#fff!important;
+  font-size:clamp(11px,2.2vw,14px)!important;
+  line-height:1.25!important;
+  overflow-wrap:anywhere!important;
+}
+.frame figcaption b{display:block!important;white-space:normal!important}
+.frame figcaption span{
+  display:block!important;
+  color:#aab8d4!important;
+  font-size:clamp(8px,1.7vw,10px)!important;
+  line-height:1.35!important;
+  letter-spacing:.12em!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+.frame .chg{top:10px!important;left:10px!important}
+.photo .bracket,.photo .side{display:none!important}
+#fotoPh:not([hidden]){width:100%!important;aspect-ratio:4/5!important}
