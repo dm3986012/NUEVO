@@ -1,1 +1,0 @@
-Pon aquí los archivos públicos de la semana 5 y regístralos en config.js
