@@ -6,7 +6,7 @@ const CONFIG = {
 };
 /* Archivos PÚBLICOS. week: 1-16 · act: 0 = Actividad 1, 1 = Actividad 2
    Archivos grandes se sirven desde el repo original (portafolio-_final-) */
-const RAW = 'https://raw.githubusercontent.com/dm3986012/portafolio-_final-/main/actividades';
+const RAW = 'https://dm3986012.github.io/portafolio-_final-/actividades';
 const EVIDENCIAS = {
   1: [
     { act: 0, name: 'actividad-1.html', url: RAW + '/semana-01/actividad-1.html' },
