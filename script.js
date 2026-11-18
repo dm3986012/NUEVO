@@ -57,12 +57,27 @@ async function removeFile(id) {
   await tx('files', 'readwrite', s => s.delete(id));
   files = files.filter(f => f.id !== id); toast('Archivo eliminado'); render();
 }
-function openFile(f, download) {
-  if (f.pub) return window.open(f.url, '_blank');
-  const url = URL.createObjectURL(f.blob);
-  if (!download && /^(image|text)\/|pdf/.test(f.type || '')) window.open(url, '_blank');
-  else { const a = document.createElement('a'); a.href = url; a.download = f.name; a.click(); }
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
+function openFile(f) {
+  const dialog = $('#fileViewer'), body = $('#viewerBody'), title = $('#viewerTitle');
+  if (!dialog || !body || !title) { toast('No se pudo abrir la vista previa'); return; }
+  title.textContent = f.name;
+  body.replaceChildren();
+  const url = f.pub ? f.url : URL.createObjectURL(f.blob);
+  const ext = (f.name.split('.').pop() || '').toLowerCase();
+  if (['png','jpg','jpeg','webp','gif','svg','bmp'].includes(ext)) {
+    const img = document.createElement('img'); img.className = 'viewer-image'; img.alt = f.name; img.src = url; body.appendChild(img);
+  } else if (ext === 'pdf') {
+    const frame = document.createElement('iframe'); frame.className = 'viewer-frame'; frame.title = f.name; frame.src = url + (f.pub ? '#view=FitH' : ''); body.appendChild(frame);
+  } else if (['html','htm'].includes(ext)) {
+    const frame = document.createElement('iframe'); frame.className = 'viewer-frame'; frame.title = f.name; frame.setAttribute('sandbox','allow-scripts allow-forms allow-modals'); frame.src = url; body.appendChild(frame);
+  } else if (['sql','txt','md','csv','json','xml','js','css'].includes(ext)) {
+    const pre = document.createElement('pre'); pre.className = 'viewer-code'; body.appendChild(pre);
+    const read = f.pub ? fetch(url).then(r => { if (!r.ok) throw new Error('No se pudo cargar'); return r.text(); }) : f.blob.text();
+    read.then(content => { pre.textContent = content; }).catch(() => { pre.textContent = 'No se pudo mostrar este archivo.'; });
+  } else {
+    const frame = document.createElement('iframe'); frame.className = 'viewer-frame'; frame.title = f.name; frame.src = url; body.appendChild(frame);
+  }
+  if (!dialog.open) dialog.showModal();
 }
 
 function render() {
@@ -123,7 +138,7 @@ document.addEventListener('click', e => {
     openBasket(`Semana ${pad(w)} · ${ACTIVITIES[a]}`, f => addFiles(w, a, Array.isArray(f) ? f : [f]));
   }
   else if (t.dataset.open) { const f = allFiles().find(x => x.id == t.dataset.open); if (f) openFile(f); }
-  else if (t.dataset.dl) { const f = allFiles().find(x => x.id == t.dataset.dl); if (f) openFile(f, true); }
+  else if (t.dataset.dl) { const f = allFiles().find(x => x.id == t.dataset.dl); if (f) openFile(f); }
   else if (t.dataset.rm) { if (confirm('¿Eliminar este archivo?')) removeFile(+t.dataset.rm); }
 });
 
@@ -133,6 +148,10 @@ document.addEventListener('click', e => {
   if (ev === 'dragover') actEl.classList.add('over'); else actEl.classList.remove('over');
   if (ev === 'drop' && e.dataTransfer.files.length) addFiles(+actEl.dataset.w, +actEl.dataset.a, [...e.dataTransfer.files]);
 }));
+
+const viewerClose = $('#viewerClose'), fileViewer = $('#fileViewer');
+if (viewerClose && fileViewer) viewerClose.onclick = () => fileViewer.close();
+if (fileViewer) fileViewer.addEventListener('click', e => { if (e.target === fileViewer) fileViewer.close(); });
 
 const root = document.documentElement, themeBtn = $('#theme');
 if (themeBtn) {
