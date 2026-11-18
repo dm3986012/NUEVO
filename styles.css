@@ -242,3 +242,24 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 @media(max-width:900px){
  .nav nav a[href="#actividades"]{display:inline-flex;align-items:center;justify-content:center}
 }
+
+/* Juego Encesta: diseño y controles responsive */
+#juego .hud{display:flex;align-items:center;gap:clamp(8px,2vw,18px);flex-wrap:wrap;padding:12px 14px;margin:16px 0 10px;border:1px solid rgba(34,211,238,.22);border-radius:14px;background:rgba(12,24,48,.8);color:#a9bad8;font-size:.72rem}
+#juego .hud span{white-space:nowrap}
+#juego .hud b{color:#eaf7ff}
+#juego .hud .mini{margin-left:auto}
+.gwrap{position:relative;width:100%;max-width:900px;margin:0 auto;overflow:hidden;border:1px solid rgba(34,211,238,.32);border-radius:18px;background:#081326;box-shadow:0 16px 50px rgba(0,0,0,.28)}
+#gm{display:block;width:100%;height:auto;aspect-ratio:16/10;touch-action:none;cursor:grab}
+#gm:active{cursor:grabbing}
+.gover{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(3,9,23,.72);backdrop-filter:blur(5px)}
+.gover.show{display:flex}
+.game-card{width:min(100%,430px);max-height:100%;overflow:auto;padding:24px;border:1px solid rgba(34,211,238,.4);border-radius:18px;background:linear-gradient(145deg,#15274a,#0a1429);box-shadow:0 20px 60px #0008;text-align:center;color:#edf6ff}
+.game-kicker{color:#22d3ee;font-size:.7rem;letter-spacing:.16em}
+.game-card h3{margin:8px 0;font-size:clamp(1.3rem,4vw,2rem)}
+.game-card p:not(.game-kicker){color:#a9bad8;line-height:1.6;font-size:.9rem}
+.game-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.game-actions button{padding:10px 15px;border-radius:10px;font:600 .8rem inherit;cursor:pointer}
+.game-primary{border:0;background:linear-gradient(110deg,#22d3ee,#3b82f6);color:#071426}
+.game-secondary{border:1px solid rgba(34,211,238,.35);background:#0b1931;color:#dff8ff}
+.game-actions button:hover{filter:brightness(1.15);transform:translateY(-1px)}
+@media(max-width:600px){#juego .hud{font-size:.62rem;padding:9px;gap:8px}.game-card{padding:16px}.gwrap{border-radius:12px}}
