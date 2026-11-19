@@ -62,5 +62,9 @@
     raf=requestAnimationFrame(loop);
   }
   window.startBasketballGame=startBasketballGame;
-  document.addEventListener('click',e=>{if(e.target.closest('#closeGame')){active=false;if(raf)cancelAnimationFrame(raf);}});
+  const stopGame=()=>{active=false;if(raf)cancelAnimationFrame(raf);raf=null;};
+  document.addEventListener('click',e=>{
+    if(e.target.closest('#closeGame')||e.target===$('gameModal'))stopGame();
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')stopGame();});
 })();
