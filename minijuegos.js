@@ -32,7 +32,15 @@
   };
   const open=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false');showMenu();};
   const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');clearTimeout(timer);};
-  function start(m){mode=m;current=[...quizzes[m]].sort(()=>Math.random()-.5).slice(0,m==='code'?3:5);qIndex=0;score=0;lives=3;locked=false;$('gameHearts').textContent='❤️❤️❤️';showQuestion();}
+  function start(m){
+    mode=m;
+    if(m==='basketball'){
+      if(typeof window.startBasketballGame==='function') window.startBasketballGame();
+      else {title.textContent='🏀 Reto de Básquetbol';body.innerHTML='<p>No se pudo cargar el juego. Actualiza la página e inténtalo otra vez.</p>';}
+      return;
+    }
+    current=[...quizzes[m]].sort(()=>Math.random()-.5).slice(0,m==='code'?3:5);qIndex=0;score=0;lives=3;locked=false;$('gameHearts').textContent='❤️❤️❤️';showQuestion();
+  }
   function showQuestion(){
     clearTimeout(timer);locked=false;
     if(qIndex>=current.length||lives<=0){finish();return;}
