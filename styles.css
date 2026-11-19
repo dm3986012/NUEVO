@@ -315,3 +315,24 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 .basketball-actions button{border:1px solid rgba(251,146,60,.45);border-radius:10px;padding:10px 14px;background:rgba(251,146,60,.14);color:var(--tx);font-weight:700;cursor:pointer}
 .basketball-actions button.primary{background:linear-gradient(110deg,#fb923c,#facc15);color:#251205;border:0}
 @media(max-width:600px){.basketball-help{font-size:.7rem}}
+
+/* Laboratorio SQL: editor, ejemplos, esquema y resultados */
+#laboratorio .lab{align-items:start}
+#laboratorio .sqlin{width:100%;min-height:145px;resize:vertical;padding:15px;border:1px solid rgba(34,211,238,.28);border-radius:12px;background:#061126;color:#dff7ff;font: .86rem/1.65 'JetBrains Mono',monospace;outline:none}
+#laboratorio .sqlin:focus{border-color:var(--cy);box-shadow:0 0 0 3px rgba(34,211,238,.1)}
+#laboratorio .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+#laboratorio .sql-chip{padding:8px 11px;border:1px solid rgba(34,211,238,.3);border-radius:999px;background:rgba(34,211,238,.07);color:var(--tx);font-size:.72rem;cursor:pointer}
+#laboratorio .sql-chip:hover{border-color:var(--cy);background:rgba(34,211,238,.15)}
+#laboratorio .schema{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px;color:var(--mu);font-size:.7rem;line-height:1.6}
+#laboratorio .schema-table{padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:rgba(8,20,44,.65)}
+#laboratorio .schema-table b{color:var(--cy)}
+#laboratorio .sql-result-wrap{max-width:100%;overflow:auto;margin:8px 0 14px}
+#laboratorio .sql-result{width:100%;border-collapse:collapse;font-size:.78rem;white-space:nowrap}
+#laboratorio .sql-result th,#laboratorio .sql-result td{padding:9px 11px;border:1px solid var(--line);text-align:left}
+#laboratorio .sql-result th{background:rgba(34,211,238,.12);color:var(--cy)}
+#laboratorio .sql-result td{color:var(--tx)}
+#laboratorio .sql-result tbody tr:nth-child(even){background:rgba(255,255,255,.035)}
+#laboratorio .sql-result-count{margin:8px 0;color:var(--cy);font-size:.68rem}
+#laboratorio .sql-error{color:#fca5a5!important;white-space:normal}
+#laboratorio .actions button:disabled{opacity:.6;cursor:wait}
+@media(max-width:650px){#laboratorio .sql-chip{font-size:.66rem;padding:7px 9px}#laboratorio .sql-result{font-size:.7rem}}
