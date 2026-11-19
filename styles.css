@@ -304,3 +304,14 @@ table{border-collapse:collapse;width:100%;font-size:.72rem}th,td{padding:.45rem 
 .game-finish .xp{color:var(--cy)}
 .game-finish button,.game-menu-btn{margin-top:16px;padding:10px 15px;border:0;border-radius:10px;background:var(--grad);color:#061326;font-weight:800;cursor:pointer}
 @media(max-width:760px){.mini-games{grid-template-columns:1fr}.mini-game-card p{min-height:0}.mini-game-score{font-size:.75rem}.mini-game-modal{padding:10px}.mini-game-modal-body{padding:15px}}
+
+/* Reto de básquetbol clásico */
+.basketball-card{border-color:rgba(249,115,22,.38);background:linear-gradient(145deg,rgba(62,35,18,.55),rgba(8,17,37,.95))}
+.basketball-card:hover,.basketball-card:focus-visible{border-color:#fb923c;box-shadow:0 0 25px rgba(251,146,60,.2)}
+.basketball-stage{width:100%;border:1px solid rgba(251,146,60,.35);border-radius:14px;overflow:hidden;background:#101d32}
+#basketballCanvas{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}
+.basketball-help{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--mu);font-size:.78rem;margin:10px 0}
+.basketball-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.basketball-actions button{border:1px solid rgba(251,146,60,.45);border-radius:10px;padding:10px 14px;background:rgba(251,146,60,.14);color:var(--tx);font-weight:700;cursor:pointer}
+.basketball-actions button.primary{background:linear-gradient(110deg,#fb923c,#facc15);color:#251205;border:0}
+@media(max-width:600px){.basketball-help{font-size:.7rem}}
