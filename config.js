@@ -7,6 +7,7 @@ const CONFIG = {
 /* Archivos PÚBLICOS. week: 1-16 · act: 0 = Actividad 1, 1 = Actividad 2
    Archivos grandes se sirven desde el repo original (portafolio-_final-) */
 const RAW = 'https://dm3986012.github.io/portafolio-_final-/actividades';
+const LOCAL = 'https://dm3986012.github.io/NUEVO/evidencias';
 const EVIDENCIAS = {
   1: [
     { act: 0, name: 'actividad-1.html', url: RAW + '/semana-01/actividad-1.html' },
@@ -58,6 +59,12 @@ const EVIDENCIAS = {
     { act: 0, name: 'infografias.pdf', url: RAW + '/semana-08/infografias.pdf' },
     { act: 1, name: 'actividad-2.html', url: RAW + '/semana-08/actividad-2.html' },
     { act: 1, name: 'Guia laboratorio-3.pdf', url: RAW + '/semana-08/Guia%20laboratorio-3.pdf' }
+  ],
+  9: [
+    { act: 0, name: 'Modulo_1_Red_Gaming.html', url: LOCAL + '/semana-09/Modulo_1_Red_Gaming.html' },
+    { act: 0, name: 'Modulo_2_Auth_Gaming.html', url: LOCAL + '/semana-09/Modulo_2_Auth_Gaming.html' },
+    { act: 0, name: 'Modulo_3_Validacion_Gaming.html', url: LOCAL + '/semana-09/Modulo_3_Validacion_Gaming.html' },
+    { act: 1, name: 'infografia_sql_server_semana09.jpg', url: LOCAL + '/semana-09/infografia_sql_server_semana09.jpg' }
   ]
 };
 
@@ -67,7 +74,8 @@ const PROYECTOS = [
   { n: 'SQL QUEST', sem: [8], sub: 'Esquemas e Indexación', d: 'Un recorrido por la estructura de una base de datos: organizar esquemas y entender cómo los índices ayudan a consultar con intención.', obj: 'Comprender esquemas e indexación para consultar con intención.', tec: ['SQL', 'Esquemas', 'Indexación'], repo: '', demo: '#laboratorio', doc: '' },
   { n: 'Manual Azure SQL', sem: [5], sub: 'Grados y Títulos', d: 'Una guía práctica para trabajar con Azure SQL a través de un caso académico de grados y títulos.', obj: 'Documentar el uso de Azure SQL con un caso académico.', tec: ['Azure SQL', 'Manual', 'Consultas'], repo: '', demo: '', doc: RAW + '/semana-05/Manual_Azure_SQL_Semana05.pdf' },
   { n: 'Arquitectura Física', sem: [6], sub: 'Almacenamiento', d: 'Una mirada a cómo se organiza físicamente la información y a las decisiones que conectan el modelo con su almacenamiento.', obj: 'Entender cómo se organiza físicamente la información.', tec: ['Arquitectura', 'Datos', 'Almacenamiento'], repo: '', demo: '', doc: RAW + '/semana-06/Informe_sem6.pdf' },
-  { n: 'Cadena Editorial', sem: [3, 4], sub: 'Empresa Informática', d: 'Modelado de una empresa editorial y datos de ejemplo para dar contexto a las relaciones entre sus entidades.', obj: 'Modelar entidades y relaciones con datos de ejemplo.', tec: ['Modelado', 'Relaciones', 'Datos de ejemplo'], repo: '', demo: '', doc: RAW + '/semana-03/2_Actividad2_CadenaEditorial_EmpresaInformatica.pdf' }
+  { n: 'Cadena Editorial', sem: [3, 4], sub: 'Empresa Informática', d: 'Modelado de una empresa editorial y datos de ejemplo para dar contexto a las relaciones entre sus entidades.', obj: 'Modelar entidades y relaciones con datos de ejemplo.', tec: ['Modelado', 'Relaciones', 'Datos de ejemplo'], repo: '', demo: '', doc: RAW + '/semana-03/2_Actividad2_CadenaEditorial_EmpresaInformatica.pdf' },
+  { n: 'Lab Gaming · SQL Server', sem: [9], sub: 'Seguridad, Conectividad y Validación', d: 'Configuración de red, autenticación segura con menor privilegio y validación por capas del motor SQL Server (puerto 51433, login analista_upla).', obj: 'Dejar SQL Server seguro, estable y confiable para acceso remoto controlado.', tec: ['SQL Server', 'TCP/IP', 'Autenticación', 'Firewall', 'NETSTAT'], repo: '', demo: '', doc: LOCAL + '/semana-09/Modulo_1_Red_Gaming.html' }
 ];
 const SKILLS = [
   { n: 'Java', cat: 'Lenguajes', lvl: 0, use: [] },
