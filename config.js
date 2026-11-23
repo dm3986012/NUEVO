@@ -69,7 +69,7 @@ const EVIDENCIAS = {
   10: [
     { act: 0, name: 'Unidad_1_y_2.pdf', url: LOCAL + '/semana-10/Unidad_1_y_2.pdf' },
     { act: 0, name: 'Unidad_3_y_4.pdf', url: LOCAL + '/semana-10/Unidad_3_y_4.pdf' },
-    { act: 1, name: 'infografia_semana10.jpg', url: LOCAL + '/semana-10/infografia_semana10.jpg' }
+    { act: 1, name: 'sem10.png', url: LOCAL + '/semana-10/sem10.png' }
   ]
 };
 
