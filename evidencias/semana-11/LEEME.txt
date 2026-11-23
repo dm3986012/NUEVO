@@ -1,0 +1,16 @@
+SEMANA 11 · DB QUEST · MUNDOS 1-4
+===================================
+
+Solo hay UNA actividad (Actividad 1).
+Los 4 informes van juntos en esa actividad:
+
+1. Mundo1_Leccion1.pdf   → Autenticación
+2. Mundo2_Leccion2.pdf   → LOGIN + USER
+3. Mundo3_leccion3.pdf   → Roles
+4. Mundo4_Leccion4.pdf   → Permisos (Jefe Final)
+
+Sube los 4 PDFs aquí con exactamente esos nombres:
+https://github.com/dm3986012/NUEVO/tree/main/evidencias/semana-11
+(Add file → Upload files)
+
+config.js ya está preparado.
