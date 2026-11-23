@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Módulo 2 · Autenticación segura · Lab Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00f0ff;
+  --purple: #b44cff;
+  --purple2: #8b2fe0;
+  --yellow: #ffd84d;
+  --green: #2dff9a;
+  --bg: #05070f;
+  --panel: #0b1020;
+  --text: #e8ecff;
+  --muted: #9aa3c7;
+  --glow-purple: 0 0 18px #b44cff55, 0 0 36px #b44cff22;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(180,76,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,76,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #1a0a3a88 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 70%, #2a0a4a44 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 18px 80px; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 22px;
+  background: rgba(5,7,15,0.92);
+  border-bottom: 1px solid #1a2545;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px #00000080;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.04em;
+}
+.brand .badge {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--purple), #6a1fc4);
+  border-radius: 10px; font-size: 14px; font-weight: 900; color: #fff;
+  box-shadow: var(--glow-purple); transform: rotate(-4deg);
+}
+.brand span { color: var(--muted); font-weight: 500; font-size: 12px; }
+.topbar nav { display: flex; gap: 8px; flex-wrap: wrap; }
+.topbar nav a {
+  text-decoration: none; color: var(--muted);
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  padding: 7px 12px; border: 1px solid #1e2a4a; border-radius: 6px; transition: 0.2s;
+}
+.topbar nav a:hover, .topbar nav a.active {
+  color: var(--purple); border-color: var(--purple); box-shadow: 0 0 12px #b44cff33;
+}
+
+.hero {
+  margin: 36px 0 36px;
+  padding: 38px 32px 42px;
+  background: linear-gradient(145deg, #120a28 0%, #1a0a30 50%, #0c0a20 100%);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--purple), #6a1fc4, var(--purple)) 1;
+  border-radius: 4px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--glow-purple), inset 0 0 60px #b44cff08;
+}
+.hero::before {
+  content: "";
+  position: absolute; width: 260px; height: 260px;
+  border: 2px solid #b44cff22; border-radius: 50%;
+  right: -50px; top: -80px;
+  box-shadow: 0 0 0 28px #b44cff08, 0 0 0 55px #b44cff05;
+}
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--purple); text-transform: uppercase; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Orbitron', sans-serif; font-weight: 900;
+  font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #fff 15%, var(--purple) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 8px; max-width: 720px;
+}
+.hero .subtitle {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  color: var(--purple); letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.hero p { max-width: 640px; color: var(--muted); font-size: 1.02rem; margin-bottom: 20px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 13px; border-radius: 999px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+  border: 1px solid var(--purple); color: var(--purple); background: #b44cff12;
+}
+
+.sec-title {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.2rem;
+  letter-spacing: 0.04em; margin: 42px 0 18px;
+  display: flex; align-items: center; gap: 14px;
+}
+.sec-title::before {
+  content: ""; width: 8px; height: 26px;
+  background: linear-gradient(180deg, var(--purple), #6a1fc4);
+  border-radius: 2px; box-shadow: var(--glow-purple);
+}
+.sec-title span {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  color: var(--muted); font-weight: 400; letter-spacing: 0.1em;
+}
+
+.obj-card {
+  background: var(--panel); border: 1px solid #1c2a4a; border-radius: 12px;
+  padding: 22px 24px; position: relative; overflow: hidden; margin-bottom: 8px;
+}
+.obj-card::after {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--purple), transparent);
+}
+.obj-card h3 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.92rem; font-weight: 700;
+  letter-spacing: 0.06em; margin-bottom: 10px; color: var(--purple);
+  display: flex; align-items: center; gap: 10px;
+}
+.obj-card p { color: var(--muted); font-size: 0.98rem; }
+
+.grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+}
+@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+.mini-card {
+  background: #0a0f1c; border: 1px solid #1a2644; border-radius: 10px; padding: 16px 18px;
+}
+.mini-card h4 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 700;
+  color: var(--purple); margin-bottom: 8px; letter-spacing: 0.04em;
+}
+.mini-card p, .mini-card li { color: var(--muted); font-size: 0.92rem; }
+.mini-card ul { list-style: none; margin-top: 6px; }
+.mini-card ul li { padding-left: 16px; position: relative; margin-bottom: 4px; }
+.mini-card ul li::before { content: "▸"; position: absolute; left: 0; color: var(--purple); }
+
+.steps { display: grid; gap: 14px; }
+.step {
+  display: grid; grid-template-columns: 48px 1fr; gap: 14px;
+  padding: 16px 18px; background: #0a0f1c;
+  border: 1px solid #1a2644; border-radius: 12px; transition: 0.2s;
+}
+.step:hover { border-color: #b44cff44; box-shadow: 0 0 20px #b44cff15; }
+.step .n {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.25rem;
+  color: var(--purple); display: grid; place-items: start; padding-top: 2px;
+}
+.step h4 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  margin-bottom: 6px; color: #eef2ff;
+}
+.step p { color: var(--muted); font-size: 0.94rem; }
+.step ul { list-style: none; margin-top: 8px; }
+.step ul li {
+  position: relative; padding-left: 18px; margin-bottom: 5px;
+  color: #c5cce8; font-size: 0.93rem;
+}
+.step ul li::before { content: "▸"; position: absolute; left: 0; color: var(--purple); font-weight: 700; }
+.code-inline {
+  font-family: 'Share Tech Mono', monospace; font-size: 0.88em;
+  background: #b44cff15; color: var(--purple);
+  padding: 2px 7px; border-radius: 4px; border: 1px solid #b44cff33;
+}
+
+.pre-box {
+  margin: 14px 0; background: #060a14;
+  border: 1px solid #1a2a48; border-left: 4px solid var(--purple);
+  border-radius: 8px; overflow: hidden;
+}
+.pre-box header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 14px; background: #0c1428;
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  letter-spacing: 0.12em; color: var(--muted);
+}
+.pre-box pre {
+  margin: 0; padding: 14px 16px; overflow-x: auto;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.88rem;
+  line-height: 1.65; color: #d0d8f8;
+}
+.kw { color: var(--purple); font-weight: 700; }
+.str { color: #8ff0a8; }
+.cmt { color: #6a7394; font-style: italic; }
+.fn { color: #d46bff; }
+
+.callout {
+  margin: 16px 0; padding: 14px 18px; border-radius: 10px;
+  border: 1px solid; display: flex; gap: 12px; align-items: flex-start;
+}
+.callout .ico { font-size: 1.3rem; flex-shrink: 0; }
+.callout.ok { border-color: #2dff9a55; background: #2dff9a10; }
+.callout.ok .ico { color: var(--green); }
+.callout.warn { border-color: #ffd84d55; background: #ffd84d10; }
+.callout.warn .ico { color: var(--yellow); }
+.callout.info { border-color: #b44cff55; background: #b44cff10; }
+.callout.info .ico { color: var(--purple); }
+.callout p { color: #d0d8f0; font-size: 0.95rem; }
+
+.tw { overflow-x: auto; margin: 18px 0; border: 1px solid #1c2a4a; border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; min-width: 420px; font-size: 0.94rem; }
+th {
+  background: #0e1630; color: var(--purple);
+  font-family: 'Orbitron', sans-serif; font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; text-align: left;
+  padding: 11px 14px; border-bottom: 1px solid #1c2a4a;
+}
+td { padding: 11px 14px; border-bottom: 1px solid #152038; color: #c5cce8; }
+tr:last-child td { border-bottom: 0; }
+tr:nth-child(even) td { background: #0a1020; }
+
+.conclusion {
+  margin: 46px 0 16px; padding: 28px 24px;
+  background: linear-gradient(135deg, #1a0a30, #120a28);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--purple), #8b2fe0) 1;
+  border-radius: 4px; text-align: center; position: relative; overflow: hidden;
+}
+.conclusion::before { content: "🔒"; font-size: 2.2rem; display: block; margin-bottom: 10px; filter: drop-shadow(0 0 12px #b44cff88); }
+.conclusion h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 800;
+  color: var(--purple); margin-bottom: 10px; letter-spacing: 0.04em;
+}
+.conclusion p { max-width: 680px; margin: 0 auto; color: var(--muted); font-size: 1.02rem; }
+
+footer {
+  margin-top: 48px; padding: 20px 0; border-top: 1px solid #1a2545;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+}
+footer strong { color: var(--purple); }
+footer a { color: var(--purple); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .hero { padding: 26px 18px 30px; }
+  .topbar { padding: 12px 14px; }
+  .topbar nav { display: none; }
+  .step { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="badge">DM</div>
+    <div>
+      DAVID MARTÍNEZ
+      <span> / LAB NOTES · MÓDULO 02</span>
+    </div>
+  </div>
+  <nav>
+    <a href="Modulo_1_Red_Gaming.html">← MÓDULO 01</a>
+    <a href="#objetivo">OBJETIVO</a>
+    <a href="#actividades">ACTIVIDADES</a>
+    <a href="Modulo_3_Validacion_Gaming.html">MÓDULO 03 →</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">MISIÓN 02 · BASE DE DATOS II · SEMANA 09</div>
+    <h1>Autenticación segura a nivel de servidor</h1>
+    <div class="subtitle">MÓDULO 02 · SQL SERVER</div>
+    <p>
+      Controla quién puede acceder al motor y qué puede hacer dentro de la base del proyecto.
+      Se habilita el modo mixto, se crea el login <strong style="color:var(--purple)">analista_upla</strong>,
+      se aplica el principio de menor privilegio y se protegen las cuentas de alto riesgo.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">🔐 AUTENTICACIÓN</span>
+      <span class="pill">👤 LOGIN / USER</span>
+      <span class="pill">🛡️ MENOR PRIVILEGIO</span>
+    </div>
+  </section>
+
+  <div class="sec-title" id="objetivo">
+    OBJETIVO DE LA MISIÓN
+    <span>// QUÉ DEBES LOGRAR</span>
+  </div>
+  <div class="obj-card">
+    <h3>🎯 META</h3>
+    <p>
+      Establecer políticas de autenticación seguras a nivel de servidor que restrinjan los accesos
+      no autorizados al proyecto analítico, aplicando el principio de menor privilegio. El perfil
+      analítico debe poder conectarse y solo consultar información.
+    </p>
+  </div>
+
+  <div class="sec-title">
+    CONCEPTOS CLAVE
+    <span>// LOGIN VS USER</span>
+  </div>
+  <div class="grid-2">
+    <div class="mini-card">
+      <h4>LOGIN · NIVEL SERVIDOR</h4>
+      <p>Verifica quién intenta conectarse al motor. Puede usar autenticación de Windows o credenciales propias de SQL Server.</p>
+    </div>
+    <div class="mini-card">
+      <h4>USER · NIVEL BASE DE DATOS</h4>
+      <p>Representa esa identidad dentro de una base concreta. Es el punto donde se asignan permisos sobre objetos.</p>
+    </div>
+  </div>
+  <div class="callout info">
+    <div class="ico">ℹ</div>
+    <p>
+      <strong>Relación importante:</strong> crear un login no concede acceso automático a todas las bases.
+      Debe existir el usuario correspondiente en la base y asignarse solo los permisos necesarios.
+    </p>
+  </div>
+
+  <div class="sec-title" id="actividades">
+    ACTIVIDADES
+    <span>// PASOS DE LA MISIÓN</span>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="n">01</div>
+      <div>
+        <h4>Habilitar el modo de autenticación mixta</h4>
+        <p>Permite usar a la vez autenticación de Windows y logins de SQL Server.</p>
+        <ul>
+          <li>Conéctate con autenticación de Windows.</li>
+          <li>Clic derecho sobre el servidor → <strong>Properties → Security</strong>.</li>
+          <li>Selecciona <strong>SQL Server and Windows Authentication mode</strong>.</li>
+          <li>Reinicia el servicio SQL Server (Configuration Manager → Services → Restart).</li>
+        </ul>
+        <div class="callout warn" style="margin-top:12px">
+          <div class="ico">!</div>
+          <p>El cambio de modo de autenticación requiere reiniciar el servicio. No basta con cerrar y abrir SSMS.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">02</div>
+      <div>
+        <h4>Crear el login analista_upla</h4>
+        <p>
+          Login SQL destinado a consultar información del proyecto. Contraseña de laboratorio
+          (ejemplo): <span class="code-inline">Upla_Analitica#2026_Lab!</span>
+        </p>
+        <ul>
+          <li>Activa <strong>Enforce password policy</strong> y <strong>Enforce password expiration</strong>.</li>
+          <li>En Server Roles: <strong>NO</strong> marcar sysadmin.</li>
+          <li>DEFAULT_DATABASE: <span class="code-inline">ProyectoAnalitico_UPLA</span>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pre-box">
+    <header>T-SQL · CREAR LOGIN</header>
+    <pre><span class="kw">USE</span> master;
+<span class="kw">GO</span>
+
+<span class="cmt">-- Crear el inicio de sesión SQL Server</span>
+<span class="kw">CREATE LOGIN</span> analista_upla
+<span class="kw">WITH</span>
+    <span class="kw">PASSWORD</span> = <span class="str">'Upla_Analitica#2026_Lab!'</span>,
+    CHECK_POLICY = <span class="kw">ON</span>,
+    CHECK_EXPIRATION = <span class="kw">ON</span>,
+    DEFAULT_DATABASE = ProyectoAnalitico_UPLA;
+<span class="kw">GO</span></pre>
+  </div>
+
+  <div class="steps" style="margin-top:16px">
+
+    <div class="step">
+      <div class="n">03</div>
+      <div>
+        <h4>Crear la base de datos del proyecto</h4>
+        <p>Debe existir antes de asignar DEFAULT_DATABASE al login.</p>
+        <div class="pre-box" style="margin-top:10px">
+          <header>T-SQL</header>
+          <pre><span class="kw">USE</span> master;
+<span class="kw">GO</span>
+<span class="kw">CREATE DATABASE</span> ProyectoAnalitico_UPLA;
+<span class="kw">GO</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">04</div>
+      <div>
+        <h4>Crear el usuario de base de datos</h4>
+        <p>Asocia el login a un user dentro de la base del proyecto.</p>
+        <div class="pre-box" style="margin-top:10px">
+          <header>T-SQL</header>
+          <pre><span class="kw">USE</span> ProyectoAnalitico_UPLA;
+<span class="kw">GO</span>
+<span class="kw">CREATE USER</span> analista_upla
+<span class="kw">FOR LOGIN</span> analista_upla;
+<span class="kw">GO</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">05</div>
+      <div>
+        <h4>Asignar permisos de lectura (menor privilegio)</h4>
+        <p>
+          Un usuario que solo consulta reportes no necesita permisos de escritura ni administración.
+          Se utiliza el rol <span class="code-inline">db_datareader</span>.
+        </p>
+        <div class="pre-box" style="margin-top:10px">
+          <header>T-SQL</header>
+          <pre><span class="kw">USE</span> ProyectoAnalitico_UPLA;
+<span class="kw">GO</span>
+<span class="kw">ALTER ROLE</span> db_datareader
+<span class="kw">ADD MEMBER</span> analista_upla;
+<span class="kw">GO</span></pre>
+        </div>
+        <div class="callout warn" style="margin-top:12px">
+          <div class="ico">!</div>
+          <p>
+            <strong>No asignes sysadmin</strong> a analista_upla. Permitiría controlar por completo
+            la instancia y acceder a información fuera del alcance del perfil analítico.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">06</div>
+      <div>
+        <h4>Verificar permisos y proteger la cuenta sa</h4>
+        <ul>
+          <li>Comprueba que el login existe y está habilitado (consulta a <span class="code-inline">sys.server_principals</span>).</li>
+          <li>Verifica que el usuario pertenece a <span class="code-inline">db_datareader</span>.</li>
+          <li>Evalúa el estado de la cuenta <strong>sa</strong>. Si el entorno lo permite de forma segura
+              y existe otra vía administrativa, deshabilítala.</li>
+        </ul>
+        <div class="callout info" style="margin-top:12px">
+          <div class="ico">ℹ</div>
+          <p>
+            Antes de deshabilitar sa, confirma que tienes otra cuenta administrativa funcional y documentada.
+            No bloquees tu propio acceso al servidor.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec-title">
+    PRINCIPIO DE MENOR PRIVILEGIO
+    <span>// POR QUÉ IMPORTA</span>
+  </div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Pregunta que responde</th>
+          <th>Ejemplo en el laboratorio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Autenticación</td>
+          <td>¿Quién eres?</td>
+          <td>Validar el login analista_upla</td>
+        </tr>
+        <tr>
+          <td>Autorización</td>
+          <td>¿Qué tienes permitido hacer?</td>
+          <td>Solo lectura en ProyectoAnalitico_UPLA</td>
+        </tr>
+        <tr>
+          <td>Auditoría</td>
+          <td>¿Qué actividad se realizó?</td>
+          <td>Revisar conexiones y acciones</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ok">
+    <div class="ico">✓</div>
+    <p>
+      <strong>Resultado esperado del módulo:</strong> modo mixto activo, login analista_upla operativo,
+      usuario en la base del proyecto con rol db_datareader, sin privilegios de administrador,
+      y cuenta sa evaluada/protegida.
+    </p>
+  </div>
+
+  <section class="conclusion">
+    <h2>MISIÓN 02 COMPLETADA</h2>
+    <p>
+      La autenticación segura combina una identidad verificable con permisos correctamente delimitados.
+      Crear cuentas es solo el inicio; la protección real se consigue al asignar, probar y revisar
+      los privilegios según el principio de menor privilegio.
+    </p>
+  </section>
+
+  <footer>
+    <div><a href="Modulo_1_Red_Gaming.html">← MÓDULO 01</a></div>
+    <div>LAB NOTES · <strong>BASE DE DATOS II</strong> · SEMANA 09</div>
+    <div><a href="Modulo_3_Validacion_Gaming.html">MÓDULO 03 →</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
