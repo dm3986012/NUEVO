@@ -70,6 +70,12 @@ const EVIDENCIAS = {
     { act: 0, name: 'Unidad_1_y_2.pdf', url: LOCAL + '/semana-10/Unidad_1_y_2.pdf' },
     { act: 0, name: 'Unidad_3_y_4.pdf', url: LOCAL + '/semana-10/Unidad_3_y_4.pdf' },
     { act: 1, name: 'sem10.png', url: LOCAL + '/semana-10/sem10.png' }
+  ],
+  11: [
+    { act: 0, name: 'Mundo1_Leccion1.pdf', url: LOCAL + '/semana-11/Mundo1_Leccion1.pdf' },
+    { act: 0, name: 'Mundo2_Leccion2.pdf', url: LOCAL + '/semana-11/Mundo2_Leccion2.pdf' },
+    { act: 0, name: 'Mundo3_leccion3.pdf', url: LOCAL + '/semana-11/Mundo3_leccion3.pdf' },
+    { act: 0, name: 'Mundo4_Leccion4.pdf', url: LOCAL + '/semana-11/Mundo4_Leccion4.pdf' }
   ]
 };
 
@@ -81,7 +87,8 @@ const PROYECTOS = [
   { n: 'Arquitectura Física', sem: [6], sub: 'Almacenamiento', d: 'Una mirada a cómo se organiza físicamente la información y a las decisiones que conectan el modelo con su almacenamiento.', obj: 'Entender cómo se organiza físicamente la información.', tec: ['Arquitectura', 'Datos', 'Almacenamiento'], repo: '', demo: '', doc: RAW + '/semana-06/Informe_sem6.pdf' },
   { n: 'Cadena Editorial', sem: [3, 4], sub: 'Empresa Informática', d: 'Modelado de una empresa editorial y datos de ejemplo para dar contexto a las relaciones entre sus entidades.', obj: 'Modelar entidades y relaciones con datos de ejemplo.', tec: ['Modelado', 'Relaciones', 'Datos de ejemplo'], repo: '', demo: '', doc: RAW + '/semana-03/2_Actividad2_CadenaEditorial_EmpresaInformatica.pdf' },
   { n: 'Lab Gaming · SQL Server', sem: [9], sub: 'Seguridad, Conectividad y Validación', d: 'Configuración de red, autenticación segura con menor privilegio y validación por capas del motor SQL Server (puerto 51433, login analista_upla).', obj: 'Dejar SQL Server seguro, estable y confiable para acceso remoto controlado.', tec: ['SQL Server', 'TCP/IP', 'Autenticación', 'Firewall', 'NETSTAT'], repo: '', demo: '', doc: LOCAL + '/semana-09/Modulo_1_Red_Gaming.html' },
-  { n: 'Cyber Lab · Unidades 1-4', sem: [10], sub: 'Administración, Seguridad, Respaldos y Monitoreo', d: 'Informes de laboratorio de gestión de archivos, recuperación, identidades/permisos, automatización de backups con Agent y monitoreo de SQL Server.', obj: 'Documentar la operación segura y confiable de SQL Server (disponibilidad + confidencialidad + integridad).', tec: ['SQL Server', 'Backups', 'Agent', 'DBCC', 'Activity Monitor'], repo: '', demo: '', doc: LOCAL + '/semana-10/Unidad_1_y_2.pdf' }
+  { n: 'Cyber Lab · Unidades 1-4', sem: [10], sub: 'Administración, Seguridad, Respaldos y Monitoreo', d: 'Informes de laboratorio de gestión de archivos, recuperación, identidades/permisos, automatización de backups con Agent y monitoreo de SQL Server.', obj: 'Documentar la operación segura y confiable de SQL Server (disponibilidad + confidencialidad + integridad).', tec: ['SQL Server', 'Backups', 'Agent', 'DBCC', 'Activity Monitor'], repo: '', demo: '', doc: LOCAL + '/semana-10/Unidad_1_y_2.pdf' },
+  { n: 'DB Quest · Mundos 1-4', sem: [11], sub: 'Autenticación, LOGIN/USER, Roles y Permisos', d: 'Ruta de seguridad en SQL Server: autenticación, creación de logins y usuarios, roles de base de datos y control de acceso con GRANT, DENY y REVOKE.', obj: 'Dominar el ciclo completo de identidades y permisos en SQL Server (mínimo privilegio).', tec: ['SQL Server', 'LOGIN', 'USER', 'Roles', 'GRANT/DENY'], repo: '', demo: '', doc: LOCAL + '/semana-11/Mundo1_Leccion1.pdf' }
 ];
 const SKILLS = [
   { n: 'Java', cat: 'Lenguajes', lvl: 0, use: [] },
