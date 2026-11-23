@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Módulo 3 · Validación y pruebas · Lab Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00f0ff;
+  --purple: #b44cff;
+  --yellow: #ffd84d;
+  --orange: #ff9a3c;
+  --green: #2dff9a;
+  --bg: #05070f;
+  --panel: #0b1020;
+  --text: #e8ecff;
+  --muted: #9aa3c7;
+  --glow-yellow: 0 0 16px #ffd84d55, 0 0 32px #ffd84d22;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,216,77,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,216,77,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #2a1a0a66 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 80%, #3a220a33 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 18px 80px; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 22px;
+  background: rgba(5,7,15,0.92);
+  border-bottom: 1px solid #1a2545;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px #00000080;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.04em;
+}
+.brand .badge {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--yellow), #cc8800);
+  border-radius: 10px; font-size: 14px; font-weight: 900; color: #1a1200;
+  box-shadow: var(--glow-yellow); transform: rotate(-4deg);
+}
+.brand span { color: var(--muted); font-weight: 500; font-size: 12px; }
+.topbar nav { display: flex; gap: 8px; flex-wrap: wrap; }
+.topbar nav a {
+  text-decoration: none; color: var(--muted);
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  padding: 7px 12px; border: 1px solid #1e2a4a; border-radius: 6px; transition: 0.2s;
+}
+.topbar nav a:hover, .topbar nav a.active {
+  color: var(--yellow); border-color: var(--yellow); box-shadow: 0 0 12px #ffd84d33;
+}
+
+.hero {
+  margin: 36px 0 36px;
+  padding: 38px 32px 42px;
+  background: linear-gradient(145deg, #1a1408 0%, #221808 50%, #0f0c06 100%);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--yellow), #cc8800, var(--yellow)) 1;
+  border-radius: 4px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--glow-yellow), inset 0 0 60px #ffd84d08;
+}
+.hero::before {
+  content: "";
+  position: absolute; width: 260px; height: 260px;
+  border: 2px solid #ffd84d22; border-radius: 50%;
+  right: -50px; top: -80px;
+  box-shadow: 0 0 0 28px #ffd84d08, 0 0 0 55px #ffd84d05;
+}
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--yellow); text-transform: uppercase; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Orbitron', sans-serif; font-weight: 900;
+  font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #fff 15%, var(--yellow) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 8px; max-width: 720px;
+}
+.hero .subtitle {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  color: var(--yellow); letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.hero p { max-width: 640px; color: var(--muted); font-size: 1.02rem; margin-bottom: 20px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 13px; border-radius: 999px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+  border: 1px solid var(--yellow); color: var(--yellow); background: #ffd84d12;
+}
+
+.sec-title {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.2rem;
+  letter-spacing: 0.04em; margin: 42px 0 18px;
+  display: flex; align-items: center; gap: 14px;
+}
+.sec-title::before {
+  content: ""; width: 8px; height: 26px;
+  background: linear-gradient(180deg, var(--yellow), #cc8800);
+  border-radius: 2px; box-shadow: var(--glow-yellow);
+}
+.sec-title span {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  color: var(--muted); font-weight: 400; letter-spacing: 0.1em;
+}
+
+.obj-card {
+  background: var(--panel); border: 1px solid #1c2a4a; border-radius: 12px;
+  padding: 22px 24px; position: relative; overflow: hidden; margin-bottom: 8px;
+}
+.obj-card::after {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--yellow), transparent);
+}
+.obj-card h3 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.92rem; font-weight: 700;
+  letter-spacing: 0.06em; margin-bottom: 10px; color: var(--yellow);
+  display: flex; align-items: center; gap: 10px;
+}
+.obj-card p { color: var(--muted); font-size: 0.98rem; }
+
+/* Layers grid */
+.layers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0;
+}
+@media (max-width: 800px) { .layers { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .layers { grid-template-columns: 1fr; } }
+.layer {
+  background: #0a0f1c; border: 1px solid #1a2644; border-radius: 10px; padding: 14px 16px;
+  text-align: center;
+}
+.layer .num {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.1rem;
+  color: var(--yellow); margin-bottom: 4px;
+}
+.layer h4 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700;
+  color: #eef2ff; margin-bottom: 4px; letter-spacing: 0.04em;
+}
+.layer p { color: var(--muted); font-size: 0.85rem; }
+
+.steps { display: grid; gap: 14px; }
+.step {
+  display: grid; grid-template-columns: 48px 1fr; gap: 14px;
+  padding: 16px 18px; background: #0a0f1c;
+  border: 1px solid #1a2644; border-radius: 12px; transition: 0.2s;
+}
+.step:hover { border-color: #ffd84d44; box-shadow: 0 0 20px #ffd84d15; }
+.step .n {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.25rem;
+  color: var(--yellow); display: grid; place-items: start; padding-top: 2px;
+}
+.step h4 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  margin-bottom: 6px; color: #eef2ff;
+}
+.step p { color: var(--muted); font-size: 0.94rem; }
+.step ul { list-style: none; margin-top: 8px; }
+.step ul li {
+  position: relative; padding-left: 18px; margin-bottom: 5px;
+  color: #c5cce8; font-size: 0.93rem;
+}
+.step ul li::before { content: "▸"; position: absolute; left: 0; color: var(--yellow); font-weight: 700; }
+.code-inline {
+  font-family: 'Share Tech Mono', monospace; font-size: 0.88em;
+  background: #ffd84d15; color: var(--yellow);
+  padding: 2px 7px; border-radius: 4px; border: 1px solid #ffd84d33;
+}
+
+.pre-box {
+  margin: 14px 0; background: #060a14;
+  border: 1px solid #1a2a48; border-left: 4px solid var(--yellow);
+  border-radius: 8px; overflow: hidden;
+}
+.pre-box header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 14px; background: #0c1428;
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  letter-spacing: 0.12em; color: var(--muted);
+}
+.pre-box pre {
+  margin: 0; padding: 14px 16px; overflow-x: auto;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.88rem;
+  line-height: 1.65; color: #d0d8f8;
+}
+.kw { color: var(--yellow); font-weight: 700; }
+.str { color: #8ff0a8; }
+.cmt { color: #6a7394; font-style: italic; }
+.fn { color: #d46bff; }
+
+.callout {
+  margin: 16px 0; padding: 14px 18px; border-radius: 10px;
+  border: 1px solid; display: flex; gap: 12px; align-items: flex-start;
+}
+.callout .ico { font-size: 1.3rem; flex-shrink: 0; }
+.callout.ok { border-color: #2dff9a55; background: #2dff9a10; }
+.callout.ok .ico { color: var(--green); }
+.callout.warn { border-color: #ffd84d55; background: #ffd84d10; }
+.callout.warn .ico { color: var(--yellow); }
+.callout.info { border-color: #00f0ff55; background: #00f0ff10; }
+.callout.info .ico { color: var(--cyan); }
+.callout p { color: #d0d8f0; font-size: 0.95rem; }
+
+.tw { overflow-x: auto; margin: 18px 0; border: 1px solid #1c2a4a; border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; min-width: 420px; font-size: 0.94rem; }
+th {
+  background: #0e1630; color: var(--yellow);
+  font-family: 'Orbitron', sans-serif; font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; text-align: left;
+  padding: 11px 14px; border-bottom: 1px solid #1c2a4a;
+}
+td { padding: 11px 14px; border-bottom: 1px solid #152038; color: #c5cce8; }
+tr:last-child td { border-bottom: 0; }
+tr:nth-child(even) td { background: #0a1020; }
+
+.conclusion {
+  margin: 46px 0 16px; padding: 28px 24px;
+  background: linear-gradient(135deg, #221808, #1a1408);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--yellow), #cc8800) 1;
+  border-radius: 4px; text-align: center; position: relative; overflow: hidden;
+}
+.conclusion::before { content: "🏆"; font-size: 2.2rem; display: block; margin-bottom: 10px; filter: drop-shadow(0 0 12px #ffd84d88); }
+.conclusion h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 800;
+  color: var(--yellow); margin-bottom: 10px; letter-spacing: 0.04em;
+}
+.conclusion p { max-width: 680px; margin: 0 auto; color: var(--muted); font-size: 1.02rem; }
+
+footer {
+  margin-top: 48px; padding: 20px 0; border-top: 1px solid #1a2545;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+}
+footer strong { color: var(--yellow); }
+footer a { color: var(--yellow); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .hero { padding: 26px 18px 30px; }
+  .topbar { padding: 12px 14px; }
+  .topbar nav { display: none; }
+  .step { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="badge">DM</div>
+    <div>
+      DAVID MARTÍNEZ
+      <span> / LAB NOTES · MÓDULO 03</span>
+    </div>
+  </div>
+  <nav>
+    <a href="Modulo_2_Auth_Gaming.html">← MÓDULO 02</a>
+    <a href="#objetivo">OBJETIVO</a>
+    <a href="#actividades">ACTIVIDADES</a>
+    <a href="#matriz">MATRIZ</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-eyebrow">MISIÓN 03 · BASE DE DATOS II · SEMANA 09</div>
+    <h1>Validación y pruebas de conectividad</h1>
+    <div class="subtitle">MÓDULO 03 · SQL SERVER</div>
+    <p>
+      Demuestra con evidencias independientes que el servicio escucha, la red permite llegar al puerto,
+      SQL Server autentica al usuario y los permisos respetan el alcance del perfil analítico.
+      Puerto objetivo: <strong style="color:var(--yellow)">51433</strong>.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">⚙️ NETSTAT</span>
+      <span class="pill">📡 TEST-NETCONNECTION</span>
+      <span class="pill">🔑 SSMS + PERMISOS</span>
+    </div>
+  </section>
+
+  <div class="sec-title" id="objetivo">
+    OBJETIVO DE LA MISIÓN
+    <span>// QUÉ DEBES LOGRAR</span>
+  </div>
+  <div class="obj-card">
+    <h3>🎯 META</h3>
+    <p>
+      Validar por capas que la configuración de red y autenticación funciona de extremo a extremo.
+      Cada herramienta observa una parte distinta del proceso; un resultado positivo en una prueba
+      no sustituye a las demás.
+    </p>
+  </div>
+
+  <div class="sec-title">
+    CAPAS DE VALIDACIÓN
+    <span>// QUÉ SE COMPRUEBA EN CADA UNA</span>
+  </div>
+  <div class="layers">
+    <div class="layer">
+      <div class="num">01</div>
+      <h4>SERVICIO</h4>
+      <p>Motor iniciado y disponible</p>
+    </div>
+    <div class="layer">
+      <div class="num">02</div>
+      <h4>PUERTO</h4>
+      <p>51433 en LISTENING</p>
+    </div>
+    <div class="layer">
+      <div class="num">03</div>
+      <h4>RED</h4>
+      <p>TCP llega al servidor</p>
+    </div>
+    <div class="layer">
+      <div class="num">04</div>
+      <h4>SQL SERVER</h4>
+      <p>Autenticación aceptada</p>
+    </div>
+    <div class="layer">
+      <div class="num">05</div>
+      <h4>PERMISOS</h4>
+      <p>Lectura OK · resto denegado</p>
+    </div>
+    <div class="layer">
+      <div class="num">06</div>
+      <h4>SESIÓN</h4>
+      <p>Datos de la conexión</p>
+    </div>
+  </div>
+
+  <div class="sec-title" id="actividades">
+    ACTIVIDADES Y EVIDENCIAS
+    <span>// PRUEBAS DOCUMENTADAS</span>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="n">01</div>
+      <div>
+        <h4>Comprobar el puerto con NETSTAT</h4>
+        <p>Verifica que SQL Server esté escuchando en el puerto 51433.</p>
+        <ul>
+          <li>En el servidor ejecuta: <span class="code-inline">netstat -ano | findstr 51433</span></li>
+          <li>Busca una línea con estado <strong>LISTENING</strong> asociada al proceso del motor.</li>
+        </ul>
+        <div class="pre-box" style="margin-top:10px">
+          <header>EJEMPLO DE SALIDA</header>
+          <pre>TCP    0.0.0.0:51433    0.0.0.0:0    LISTENING    2456</pre>
+        </div>
+        <div class="callout ok" style="margin-top:10px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> puerto TCP 51433 en LISTENING.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">02</div>
+      <div>
+        <h4>Probar conectividad con Test-NetConnection</h4>
+        <p>Desde el equipo cliente verifica si existe comunicación TCP con el servidor.</p>
+        <ul>
+          <li>Ejecuta (sustituye la IP por la real del servidor):</li>
+        </ul>
+        <div class="pre-box" style="margin-top:8px">
+          <header>POWERSHELL</header>
+          <pre>Test-NetConnection -ComputerName 192.168.1.50 -Port 51433</pre>
+        </div>
+        <div class="callout ok" style="margin-top:10px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado clave:</strong> <span class="code-inline">TcpTestSucceeded : True</span></p>
+        </div>
+        <div class="callout info" style="margin-top:8px">
+          <div class="ico">ℹ</div>
+          <p>
+            Una prueba TCP exitosa <strong>no</strong> demuestra que el login sea válido ni que tenga permisos.
+            Solo confirma que existe comunicación con el puerto.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">03</div>
+      <div>
+        <h4>Obtener la dirección IP del servidor</h4>
+        <p>
+          En el equipo donde está instalado SQL Server ejecuta
+          <span class="code-inline">ipconfig</span> y documenta la IPv4 real utilizada
+          (no copies IPs de ejemplo del material).
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">04</div>
+      <div>
+        <h4>Conectar desde SSMS (conexión remota)</h4>
+        <p>Desde el equipo cliente establece la conexión al motor.</p>
+        <ul>
+          <li>Abre SSMS en el cliente.</li>
+          <li>Server name: <span class="code-inline">tcp:<IP_SERVIDOR>,51433</span></li>
+          <li>Autenticación: SQL Server Authentication</li>
+          <li>Login: <span class="code-inline">analista_upla</span> + contraseña del laboratorio</li>
+        </ul>
+        <div class="callout ok" style="margin-top:12px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> conexión exitosa usando el puerto 51433 y el login analista_upla.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">05</div>
+      <div>
+        <h4>Validar autenticación y permisos</h4>
+        <p><strong>5A — Prueba de lectura permitida:</strong></p>
+        <div class="pre-box" style="margin-top:8px">
+          <header>T-SQL · PERMISO DE LECTURA</header>
+          <pre><span class="kw">USE</span> ProyectoAnalitico_UPLA;
+<span class="kw">GO</span>
+
+<span class="kw">SELECT</span>
+    <span class="fn">HAS_PERMS_BY_NAME</span>(
+        <span class="fn">DB_NAME</span>(),
+        <span class="str">'DATABASE'</span>,
+        <span class="str">'SELECT'</span>
+    ) <span class="kw">AS</span> PermisoLectura;
+<span class="kw">GO</span></pre>
+        </div>
+        <div class="callout ok" style="margin-top:8px">
+          <div class="ico">✓</div>
+          <p><strong>Esperado:</strong> PermisoLectura = 1</p>
+        </div>
+        <p style="margin-top:14px"><strong>5B — Prueba de restricción (debe fallar):</strong></p>
+        <p style="color:var(--muted);font-size:0.94rem">
+          Intenta crear una tabla u otra operación de escritura/DDL. El rechazo por permisos
+          es la evidencia de que el control de acceso funciona. <strong>No “arregles”</strong>
+          el error concediendo permisos extra.
+        </p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">06</div>
+      <div>
+        <h4>Revisar la sesión con vistas del sistema</h4>
+        <p>
+          Consulta información de la conexión establecida (por ejemplo con
+          <span class="code-inline">sys.dm_exec_connections</span> u otras DMV)
+          para documentar que la sesión corresponde al login y al puerto esperados.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DIAGNOSTIC TABLE -->
+  <div class="sec-title">
+    ÁRBOL DE DIAGNÓSTICO
+    <span>// SI ALGO FALLA</span>
+  </div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Resultado observado</th>
+          <th>Posible causa</th>
+          <th>Siguiente comprobación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>No aparece LISTENING</td>
+          <td>Servicio detenido, TCP/IP off o puerto distinto</td>
+          <td>Servicio + protocolos + puerto</td>
+        </tr>
+        <tr>
+          <td>TcpTestSucceeded : False</td>
+          <td>IP incorrecta, firewall o ruta de red</td>
+          <td>IP, puerto y regla de entrada</td>
+        </tr>
+        <tr>
+          <td>TCP OK, SSMS rechaza</td>
+          <td>Credenciales, modo auth o login deshabilitado</td>
+          <td>Login y método de autenticación</td>
+        </tr>
+        <tr>
+          <td>Conecta pero consulta denegada</td>
+          <td>Falta permiso en esa base</td>
+          <td>Usuario, roles y permisos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ACCEPTANCE MATRIX -->
+  <div class="sec-title" id="matriz">
+    MATRIZ DE ACEPTACIÓN
+    <span>// CONDICIONES DE CIERRE DEL LABORATORIO</span>
+  </div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Control</th>
+          <th>Condición esperada</th>
+          <th>Evidencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Servicio SQL Server</td>
+          <td>En ejecución</td>
+          <td>Administrador de servicios</td>
+        </tr>
+        <tr>
+          <td>Puerto TCP</td>
+          <td>51433 en escucha</td>
+          <td>NETSTAT</td>
+        </tr>
+        <tr>
+          <td>Conectividad cliente-servidor</td>
+          <td>Prueba TCP satisfactoria</td>
+          <td>Test-NetConnection</td>
+        </tr>
+        <tr>
+          <td>Dirección del servidor</td>
+          <td>IPv4 correcta y documentada</td>
+          <td>IPCONFIG</td>
+        </tr>
+        <tr>
+          <td>Autenticación</td>
+          <td>Login autorizado puede conectarse</td>
+          <td>SSMS</td>
+        </tr>
+        <tr>
+          <td>Permisos</td>
+          <td>Lectura permitida · acciones no autorizadas denegadas</td>
+          <td>Pruebas T-SQL</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ok">
+    <div class="ico">✓</div>
+    <p>
+      <strong>Criterio de aceptación:</strong> la conectividad se considera validada cuando se demuestra,
+      con evidencias independientes, que el servicio escucha, la red permite llegar al puerto,
+      SQL Server autentica al usuario y los permisos respetan el alcance del perfil analítico.
+    </p>
+  </div>
+
+  <section class="conclusion">
+    <h2>MISIÓN 03 COMPLETADA · LABORATORIO CERRADO</h2>
+    <p>
+      Con la configuración de red, la autenticación de menor privilegio y la validación por capas,
+      SQL Server queda como una plataforma <strong>segura, estable y confiable</strong>.
+      El puerto 51433, el login analista_upla y las pruebas documentadas cierran el ciclo de la misión.
+    </p>
+  </section>
+
+  <footer>
+    <div><a href="Modulo_2_Auth_Gaming.html">← MÓDULO 02</a></div>
+    <div>LAB NOTES · <strong>BASE DE DATOS II</strong> · SEMANA 09</div>
+    <div>DAVID MARTÍNEZ · GAMING EDITION</div>
+  </footer>
+
+</div>
+</body>
+</html>
