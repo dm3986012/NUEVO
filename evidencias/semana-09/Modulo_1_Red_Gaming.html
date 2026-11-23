@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Módulo 1 · Configuración de red · Lab Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan: #00f0ff;
+  --cyan2: #00c8e0;
+  --purple: #b44cff;
+  --yellow: #ffd84d;
+  --orange: #ff7a3c;
+  --green: #2dff9a;
+  --bg: #05070f;
+  --panel: #0b1020;
+  --text: #e8ecff;
+  --muted: #9aa3c7;
+  --glow-cyan: 0 0 18px #00f0ff66, 0 0 40px #00f0ff22;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #0a1a3a88 0%, transparent 55%),
+              radial-gradient(ellipse at 20% 80%, #00334433 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 18px 80px; }
+
+/* TOPBAR */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 22px;
+  background: rgba(5,7,15,0.92);
+  border-bottom: 1px solid #1a2545;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px #00000080;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.04em;
+}
+.brand .badge {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--cyan), #0088aa);
+  border-radius: 10px; font-size: 14px; font-weight: 900; color: #05070f;
+  box-shadow: var(--glow-cyan); transform: rotate(-4deg);
+}
+.brand span { color: var(--muted); font-weight: 500; font-size: 12px; }
+.topbar nav { display: flex; gap: 8px; flex-wrap: wrap; }
+.topbar nav a {
+  text-decoration: none; color: var(--muted);
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  padding: 7px 12px; border: 1px solid #1e2a4a; border-radius: 6px; transition: 0.2s;
+}
+.topbar nav a:hover, .topbar nav a.active {
+  color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 12px #00f0ff33;
+}
+
+/* HERO */
+.hero {
+  margin: 36px 0 36px;
+  padding: 38px 32px 42px;
+  background: linear-gradient(145deg, #0c1228 0%, #0a1830 55%, #061420 100%);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--cyan), #0088cc, var(--cyan)) 1;
+  border-radius: 4px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--glow-cyan), inset 0 0 60px #00f0ff08;
+}
+.hero::before {
+  content: "";
+  position: absolute; width: 260px; height: 260px;
+  border: 2px solid #00f0ff22; border-radius: 50%;
+  right: -50px; top: -80px;
+  box-shadow: 0 0 0 28px #00f0ff08, 0 0 0 55px #00f0ff05;
+}
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--cyan); text-transform: uppercase; margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Orbitron', sans-serif; font-weight: 900;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem); line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #fff 15%, var(--cyan) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 8px; max-width: 700px;
+}
+.hero .subtitle {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 16px;
+}
+.hero p { max-width: 640px; color: var(--muted); font-size: 1.02rem; margin-bottom: 20px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 13px; border-radius: 999px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+  border: 1px solid var(--cyan); color: var(--cyan); background: #00f0ff12;
+}
+
+/* SECTION TITLE */
+.sec-title {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.2rem;
+  letter-spacing: 0.04em; margin: 42px 0 18px;
+  display: flex; align-items: center; gap: 14px;
+}
+.sec-title::before {
+  content: ""; width: 8px; height: 26px;
+  background: linear-gradient(180deg, var(--cyan), #0088aa);
+  border-radius: 2px; box-shadow: var(--glow-cyan);
+}
+.sec-title span {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  color: var(--muted); font-weight: 400; letter-spacing: 0.1em;
+}
+
+/* OBJECTIVE CARD */
+.obj-card {
+  background: var(--panel); border: 1px solid #1c2a4a; border-radius: 12px;
+  padding: 22px 24px; position: relative; overflow: hidden; margin-bottom: 8px;
+}
+.obj-card::after {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+}
+.obj-card h3 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.92rem; font-weight: 700;
+  letter-spacing: 0.06em; margin-bottom: 10px; color: var(--cyan);
+  display: flex; align-items: center; gap: 10px;
+}
+.obj-card p { color: var(--muted); font-size: 0.98rem; }
+
+/* STEPS */
+.steps { display: grid; gap: 14px; }
+.step {
+  display: grid; grid-template-columns: 48px 1fr; gap: 14px;
+  padding: 16px 18px; background: #0a0f1c;
+  border: 1px solid #1a2644; border-radius: 12px;
+  transition: 0.2s;
+}
+.step:hover { border-color: #00f0ff44; box-shadow: 0 0 20px #00f0ff15; }
+.step .n {
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.25rem;
+  color: var(--cyan); display: grid; place-items: start; padding-top: 2px;
+}
+.step h4 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 600;
+  margin-bottom: 6px; color: #eef2ff;
+}
+.step p { color: var(--muted); font-size: 0.94rem; }
+.step ul { list-style: none; margin-top: 8px; }
+.step ul li {
+  position: relative; padding-left: 18px; margin-bottom: 5px;
+  color: #c5cce8; font-size: 0.93rem;
+}
+.step ul li::before { content: "▸"; position: absolute; left: 0; color: var(--cyan); font-weight: 700; }
+.code-inline {
+  font-family: 'Share Tech Mono', monospace; font-size: 0.88em;
+  background: #00f0ff15; color: var(--cyan);
+  padding: 2px 7px; border-radius: 4px; border: 1px solid #00f0ff33;
+}
+
+/* RESULT / CALLOUT */
+.callout {
+  margin: 20px 0; padding: 14px 18px; border-radius: 10px;
+  border: 1px solid; display: flex; gap: 12px; align-items: flex-start;
+}
+.callout .ico { font-size: 1.3rem; flex-shrink: 0; }
+.callout.ok { border-color: #2dff9a55; background: #2dff9a10; }
+.callout.ok .ico { color: var(--green); }
+.callout.warn { border-color: #ffd84d55; background: #ffd84d10; }
+.callout.warn .ico { color: var(--yellow); }
+.callout.info { border-color: #00f0ff55; background: #00f0ff10; }
+.callout.info .ico { color: var(--cyan); }
+.callout p { color: #d0d8f0; font-size: 0.95rem; }
+
+/* SUMMARY TABLE */
+.tw { overflow-x: auto; margin: 18px 0; border: 1px solid #1c2a4a; border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; min-width: 420px; font-size: 0.94rem; }
+th {
+  background: #0e1630; color: var(--cyan);
+  font-family: 'Orbitron', sans-serif; font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; text-align: left;
+  padding: 11px 14px; border-bottom: 1px solid #1c2a4a;
+}
+td { padding: 11px 14px; border-bottom: 1px solid #152038; color: #c5cce8; }
+tr:last-child td { border-bottom: 0; }
+tr:nth-child(even) td { background: #0a1020; }
+
+/* CONCLUSION */
+.conclusion {
+  margin: 46px 0 16px; padding: 28px 24px;
+  background: linear-gradient(135deg, #0c1830, #061820);
+  border: 2px solid transparent;
+  border-image: linear-gradient(120deg, var(--cyan), #00aacc) 1;
+  border-radius: 4px; text-align: center; position: relative; overflow: hidden;
+}
+.conclusion::before { content: "🌐"; font-size: 2.2rem; display: block; margin-bottom: 10px; filter: drop-shadow(0 0 12px #00f0ff88); }
+.conclusion h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 800;
+  color: var(--cyan); margin-bottom: 10px; letter-spacing: 0.04em;
+}
+.conclusion p { max-width: 680px; margin: 0 auto; color: var(--muted); font-size: 1.02rem; }
+
+/* FOOTER */
+footer {
+  margin-top: 48px; padding: 20px 0; border-top: 1px solid #1a2545;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+}
+footer strong { color: var(--cyan); }
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .hero { padding: 26px 18px 30px; }
+  .topbar { padding: 12px 14px; }
+  .topbar nav { display: none; }
+  .step { grid-template-columns: 36px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="badge">DM</div>
+    <div>
+      DAVID MARTÍNEZ
+      <span> / LAB NOTES · MÓDULO 01</span>
+    </div>
+  </div>
+  <nav>
+    <a href="#objetivo">OBJETIVO</a>
+    <a href="#actividades">ACTIVIDADES</a>
+    <a href="#resumen">RESUMEN</a>
+    <a href="Modulo_2_Auth_Gaming.html">MÓDULO 02 →</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">MISIÓN 01 · BASE DE DATOS II · SEMANA 09</div>
+    <h1>Configuración de red y conectividad remota</h1>
+    <div class="subtitle">MÓDULO 01 · SQL SERVER</div>
+    <p>
+      Prepara la instancia de Microsoft SQL Server para aceptar conexiones desde otros equipos
+      de la red de forma controlada: identifica el servicio, habilita TCP/IP, fija el puerto
+      <strong style="color:var(--cyan)">51433</strong>, permite conexiones remotas y abre el firewall.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">🌐 RED Y PUERTOS</span>
+      <span class="pill">📡 TCP/IP</span>
+      <span class="pill">🛡️ FIREWALL</span>
+    </div>
+  </section>
+
+  <!-- OBJECTIVE -->
+  <div class="sec-title" id="objetivo">
+    OBJETIVO DE LA MISIÓN
+    <span>// QUÉ DEBES LOGRAR</span>
+  </div>
+  <div class="obj-card">
+    <h3>🎯 META</h3>
+    <p>
+      Dejar el motor de SQL Server escuchando en un puerto TCP estático conocido, con el protocolo
+      de red habilitado, las conexiones remotas activadas y una regla de firewall que permita
+      únicamente el tráfico necesario. Al terminar, la instancia debe estar lista para ser validada
+      desde un equipo cliente.
+    </p>
+  </div>
+
+  <!-- ACTIVITIES -->
+  <div class="sec-title" id="actividades">
+    ACTIVIDADES
+    <span>// CINCO PASOS PARA LA CONEXIÓN REMOTA</span>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="n">01</div>
+      <div>
+        <h4>Identificar la instancia de SQL Server</h4>
+        <p>
+          Confirma qué instancia tienes instalada y que el servicio del motor esté en ejecución.
+        </p>
+        <ul>
+          <li>Presiona <span class="code-inline">Windows + R</span>, escribe <span class="code-inline">services.msc</span> y Enter.</li>
+          <li>Busca el servicio de SQL Server e identifica el nombre de la instancia.</li>
+          <li>Comprueba que el estado sea <strong>En ejecución</strong>.</li>
+        </ul>
+        <div class="callout ok" style="margin-top:12px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> instancia identificada y motor activo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">02</div>
+      <div>
+        <h4>Habilitar el protocolo TCP/IP</h4>
+        <p>
+          TCP/IP es el protocolo que usan las conexiones por red. Shared Memory solo sirve en el mismo equipo.
+        </p>
+        <ul>
+          <li>Ejecuta el Configuration Manager de tu versión:
+            <span class="code-inline">SQLServerManager15.msc</span> (2019),
+            <span class="code-inline">SQLServerManager16.msc</span> (2022) o
+            <span class="code-inline">SQLServerManager17.msc</span> (2025).</li>
+          <li>Abre <strong>SQL Server Network Configuration → Protocols</strong> de tu instancia.</li>
+          <li>Haz clic derecho en <strong>TCP/IP → Enable</strong>.</li>
+        </ul>
+        <div class="callout ok" style="margin-top:12px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> TCP/IP habilitado para recibir conexiones de red.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">03</div>
+      <div>
+        <h4>Configurar un puerto TCP estático — 51433</h4>
+        <p>
+          Con puertos dinámicos, SQL Server elige uno distinto en cada inicio. Un puerto fijo permite
+          abrir una regla de firewall predecible.
+        </p>
+        <ul>
+          <li>En Configuration Manager → Protocols → doble clic en <strong>TCP/IP</strong>.</li>
+          <li>Pestaña <strong>IP Addresses</strong> → sección <strong>IPAll</strong>.</li>
+          <li>Deja <em>TCP Dynamic Ports</em> completamente vacío.</li>
+          <li>En <em>TCP Port</em> escribe <span class="code-inline">51433</span>.</li>
+          <li>Acepta y <strong>reinicia el servicio</strong> SQL Server.</li>
+        </ul>
+        <div class="callout warn" style="margin-top:12px">
+          <div class="ico">!</div>
+          <p><strong>Importante:</strong> el reinicio es obligatorio para aplicar el cambio. Revisa que ninguna IP individual tenga valores que contradigan el puerto.</p>
+        </div>
+        <div class="callout ok" style="margin-top:10px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> SQL Server escucha en el puerto TCP 51433.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">04</div>
+      <div>
+        <h4>Habilitar las conexiones remotas desde SSMS</h4>
+        <p>
+          Esta opción controla si el servidor acepta conexiones desde otros equipos.
+        </p>
+        <ul>
+          <li>Abre SQL Server Management Studio y conéctate con autenticación de Windows.</li>
+          <li>Clic derecho sobre el servidor → <strong>Properties</strong>.</li>
+          <li>Entra en <strong>Connections</strong>.</li>
+          <li>Activa <strong>Allow remote connections to this server</strong>.</li>
+        </ul>
+        <div class="callout info" style="margin-top:12px">
+          <div class="ico">ℹ</div>
+          <p>Por sí sola no basta: también deben estar habilitados TCP/IP y la regla del firewall.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">05</div>
+      <div>
+        <h4>Configurar el Firewall de Windows</h4>
+        <p>
+          El firewall bloquea por defecto el tráfico entrante. Abre solo el puerto necesario.
+        </p>
+        <ul>
+          <li>Abre <strong>Firewall de Windows Defender con seguridad avanzada</strong>.</li>
+          <li>Reglas de entrada → <strong>Nueva regla</strong> → tipo <strong>Puerto</strong>.</li>
+          <li>Selecciona <strong>TCP</strong> y puertos locales específicos: <span class="code-inline">51433</span>.</li>
+          <li>Acción: <strong>Permitir la conexión</strong>.</li>
+          <li>Aplica los perfiles que correspondan (Dominio / Privado / Público según tu red).</li>
+          <li><em>Opcional — Scope:</em> restringe por direcciones IP remotas autorizadas.</li>
+        </ul>
+        <div class="callout warn" style="margin-top:12px">
+          <div class="ico">!</div>
+          <p><strong>Ojo:</strong> las IPs de ejemplo del material (192.168.1.100 / .101) no deben copiarse si no corresponden a tu red real.</p>
+        </div>
+        <div class="callout ok" style="margin-top:10px">
+          <div class="ico">✓</div>
+          <p><strong>Resultado esperado:</strong> el firewall permite TCP 51433 (y, si se aplicó, solo desde IPs autorizadas).</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec-title" id="resumen">
+    RESUMEN DEL MÓDULO
+    <span>// CHECKLIST DE CIERRE</span>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th>Trabajo realizado</th>
+          <th>Resultado esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Identificar instancia SQL Server</td>
+          <td>Servicio activo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Habilitar TCP/IP</td>
+          <td>Protocolo Enabled</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Configurar puerto estático</td>
+          <td>Puerto 51433</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Habilitar conexiones remotas</td>
+          <td>Remotas permitidas</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Configurar firewall</td>
+          <td>Regla TCP 51433 creada</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info">
+    <div class="ico">✎</div>
+    <p>
+      <strong>Respuesta para el informe:</strong> Se identificó la instancia y se comprobó el servicio en ejecución.
+      Se habilitó TCP/IP, se configuró el puerto estático 51433, se activaron las conexiones remotas en SSMS
+      y se creó la regla de entrada en el Firewall de Windows Defender para el tráfico TCP requerido.
+    </p>
+  </div>
+
+  <!-- CONCLUSION -->
+  <section class="conclusion">
+    <h2>MISIÓN 01 COMPLETADA</h2>
+    <p>
+      Mediante las cinco actividades se establecen las configuraciones necesarias para la conectividad
+      de Microsoft SQL Server: instancia identificada, TCP/IP activo, puerto estático 51433,
+      conexiones remotas permitidas y regla de firewall lista. El entorno queda preparado para
+      las pruebas de autenticación y validación de los siguientes módulos.
+    </p>
+  </section>
+
+  <footer>
+    <div>LAB NOTES · <strong>BASE DE DATOS II</strong> · SEMANA 09</div>
+    <div><a href="Modulo_2_Auth_Gaming.html">SIGUIENTE → MÓDULO 02</a></div>
+    <div>DAVID MARTÍNEZ · GAMING EDITION</div>
+  </footer>
+
+</div>
+</body>
+</html>
