@@ -1,0 +1,14 @@
+SEMANA 09 · LAB GAMING · SQL SERVER
+====================================
+
+Actividad 1 (ya subida):
+- Modulo_1_Red_Gaming.html
+- Modulo_2_Auth_Gaming.html
+- Modulo_3_Validacion_Gaming.html
+
+Actividad 2:
+Sube aquí la imagen de la infografía con el nombre:
+  infografia_sql_server_semana09.jpg
+
+(Puedes arrastrar el archivo en GitHub → Add file → Upload files)
+La configuración en config.js ya apunta a esa ruta.
