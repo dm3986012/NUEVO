@@ -1,0 +1,15 @@
+SEMANA 10 · CYBER LAB · UNIDADES 01-04
+=======================================
+
+Actividad 1 (PDFs):
+- Unidad_1_y_2.pdf   (Administración y Seguridad · Unidades 01+02)
+- Unidad_3_y_4.pdf   (Operación y Supervisión · Unidades 03+04)
+
+Actividad 2 (imagen):
+- infografia_semana10.jpg   (o .png)  → Infografía resumen de las 4 unidades
+
+Sube los archivos aquí con exactamente esos nombres:
+https://github.com/dm3986012/NUEVO/tree/main/evidencias/semana-10
+(Add file → Upload files)
+
+La configuración en config.js ya los espera.
