@@ -65,6 +65,11 @@ const EVIDENCIAS = {
     { act: 0, name: 'Modulo_2_Auth_Gaming.html', url: LOCAL + '/semana-09/Modulo_2_Auth_Gaming.html' },
     { act: 0, name: 'Modulo_3_Validacion_Gaming.html', url: LOCAL + '/semana-09/Modulo_3_Validacion_Gaming.html' },
     { act: 1, name: 'infografia_sql_server_semana09.jpg', url: LOCAL + '/semana-09/infografia_sql_server_semana09.jpg' }
+  ],
+  10: [
+    { act: 0, name: 'Unidad_1_y_2.pdf', url: LOCAL + '/semana-10/Unidad_1_y_2.pdf' },
+    { act: 0, name: 'Unidad_3_y_4.pdf', url: LOCAL + '/semana-10/Unidad_3_y_4.pdf' },
+    { act: 1, name: 'infografia_semana10.jpg', url: LOCAL + '/semana-10/infografia_semana10.jpg' }
   ]
 };
 
@@ -75,7 +80,8 @@ const PROYECTOS = [
   { n: 'Manual Azure SQL', sem: [5], sub: 'Grados y Títulos', d: 'Una guía práctica para trabajar con Azure SQL a través de un caso académico de grados y títulos.', obj: 'Documentar el uso de Azure SQL con un caso académico.', tec: ['Azure SQL', 'Manual', 'Consultas'], repo: '', demo: '', doc: RAW + '/semana-05/Manual_Azure_SQL_Semana05.pdf' },
   { n: 'Arquitectura Física', sem: [6], sub: 'Almacenamiento', d: 'Una mirada a cómo se organiza físicamente la información y a las decisiones que conectan el modelo con su almacenamiento.', obj: 'Entender cómo se organiza físicamente la información.', tec: ['Arquitectura', 'Datos', 'Almacenamiento'], repo: '', demo: '', doc: RAW + '/semana-06/Informe_sem6.pdf' },
   { n: 'Cadena Editorial', sem: [3, 4], sub: 'Empresa Informática', d: 'Modelado de una empresa editorial y datos de ejemplo para dar contexto a las relaciones entre sus entidades.', obj: 'Modelar entidades y relaciones con datos de ejemplo.', tec: ['Modelado', 'Relaciones', 'Datos de ejemplo'], repo: '', demo: '', doc: RAW + '/semana-03/2_Actividad2_CadenaEditorial_EmpresaInformatica.pdf' },
-  { n: 'Lab Gaming · SQL Server', sem: [9], sub: 'Seguridad, Conectividad y Validación', d: 'Configuración de red, autenticación segura con menor privilegio y validación por capas del motor SQL Server (puerto 51433, login analista_upla).', obj: 'Dejar SQL Server seguro, estable y confiable para acceso remoto controlado.', tec: ['SQL Server', 'TCP/IP', 'Autenticación', 'Firewall', 'NETSTAT'], repo: '', demo: '', doc: LOCAL + '/semana-09/Modulo_1_Red_Gaming.html' }
+  { n: 'Lab Gaming · SQL Server', sem: [9], sub: 'Seguridad, Conectividad y Validación', d: 'Configuración de red, autenticación segura con menor privilegio y validación por capas del motor SQL Server (puerto 51433, login analista_upla).', obj: 'Dejar SQL Server seguro, estable y confiable para acceso remoto controlado.', tec: ['SQL Server', 'TCP/IP', 'Autenticación', 'Firewall', 'NETSTAT'], repo: '', demo: '', doc: LOCAL + '/semana-09/Modulo_1_Red_Gaming.html' },
+  { n: 'Cyber Lab · Unidades 1-4', sem: [10], sub: 'Administración, Seguridad, Respaldos y Monitoreo', d: 'Informes de laboratorio de gestión de archivos, recuperación, identidades/permisos, automatización de backups con Agent y monitoreo de SQL Server.', obj: 'Documentar la operación segura y confiable de SQL Server (disponibilidad + confidencialidad + integridad).', tec: ['SQL Server', 'Backups', 'Agent', 'DBCC', 'Activity Monitor'], repo: '', demo: '', doc: LOCAL + '/semana-10/Unidad_1_y_2.pdf' }
 ];
 const SKILLS = [
   { n: 'Java', cat: 'Lenguajes', lvl: 0, use: [] },
